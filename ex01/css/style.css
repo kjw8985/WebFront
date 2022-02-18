@@ -1,0 +1,16 @@
+@charset "UTF-8";
+/* 전체 선택자 : 모든 HTML 태그를 선택 */
+
+h1 {
+
+    color: rgb(22, 6, 236);
+
+}
+
+/*태그 선택자 : 모든 선택된 태그*/
+
+nav, section {
+    margin : 50px 20px;
+
+
+}
