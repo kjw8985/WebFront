@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+    <title>개인거래 게시판 리뷰작성 완료</title>
+    <div id="signupbox">
+        <p id="writeboardtitle">제목 : {{ question.subject }}</p>
+        <span id = "userid">*작성자 : {{ question.author.username }}</span>
+        <span id = "writedate">*작성일자 : {{ question.create_date }}</span>
+    <hr>
+        <pre>
+        <p>{{ question.content }}</p>
+        </pre>
+    </div>
+    <div id = "commentbox">
+        <span id = "userid">유저명</span>
+        <span id = "writedate">작성날짜</span>
+    <hr>
+        <p id = "commentarea">쓴 댓글이 보여질 공간</p>
+    </div>
+    <form>
+        <div id = "writecommentbox">
+            <textarea id="commentwrite" rows="3" name="" placeholder="댓글을 입력해주세요"></textarea>
+            <div id="commenton">
+            <input id = "submitcomment" type="submit" name="" value="댓글쓰기"/>
+            </div>
+        </div>
+    </form>
+{% endblock %}
