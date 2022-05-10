@@ -32,6 +32,10 @@
                                             <!-- board_filter 로드해야 작동됨-->
                                             {{ longmonth_board.paginator.count|sub:longmonth_board.start_index|sub:forloop.counter0|add:1 }}
                                             <a id ="boardtitle" href ="{% url 'board:long_result' question2.id %}">{{ question2.subject }}</a>
+                                            <!-- 댓글 표시 시작-->
+                                            {% if question2.answer2_set.count > 0 %}
+                                        <span class="text-danger small mx 3">댓글수: {{ question2.answer2_set.count }}</span>
+                                            {% endif %}
                                         </td>
                                         <td>
                                             <p>{{ question2.author.username }}</p>
@@ -45,26 +49,46 @@
                                 <!-- 게시글 불러오기 끝-->
                                 </tbody>
                             </table>
-                        <!-- 페이징 처리 -->
-                        <div class ="paging">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination">
+                            <!-- 페이징 처리 -->
+                        <div>
+                            <ul class="pagination justify-content-center">
+                                <!-- 이전 페이지 -->
+                                {% if longmonth_board.has_previous %}
                                 <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                    </a>
+                                    <a class="page-link" href="?page={{ longmonth_board.previous_page_number }}">이전</a>
                                 </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+                                </li>
+                                {% endif %}
+                                <!-- 페이지리스트 -->
+                                {% for page_number in longmonth_board.paginator.page_range %}
+                                {% if page_number >= longmonth_board.number|add:-5 and page_number <= longmonth_board.number|add:5 %}
+                                {% if page_number == longmonth_board.number %}
+                                <li class="page-item active" aria-current="page">
+                                    <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+                                </li>
+                                {% else %}
                                 <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                    </a>
+                                    <a class="page-item" href="?page={{ page_number }}">{{ page_number }}</a>
+                               </li>
+                                {% endif %}
+                                {% endif %}
+                                {% endfor %}
+                                <!-- 다음페이지 -->
+                                {% if longmonth_board.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ longmonth_board.next_page_number }}">다음</a>
                                 </li>
-                                </ul>
-                            </nav>
-                        </div>	
+                                {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                        <!-- 페이징처리 끝 -->
                     </div>
                 </div>
             </div>
